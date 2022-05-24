@@ -290,68 +290,7 @@ namespace PhoneCostApp
 
         }
 
-        public async Task  AccessFolder()
-        {
-            Uri path = new Uri( "https://abb.sharepoint.com/:f:/r/teams/FS-ISLocalApplications-PBIReports/Shared%20Documents/Data%20Source/Phone%20Costs?csf=1&web=1&e=HzuWU7");
-            //string relativePath = "/:f:/r/teams/FS-ISLocalApplications-PBIReports/Shared Documents/Data Source/Phone Costs";
-
-
-            string password = "Kalkmak04;";
-            string userName = "alpaslan.akdag@ch.abb.com";
-           
-            ClientContext ctx = new ClientContext(path);
-            SecureString securePassword = new SecureString();
-
-            foreach (var item in password.ToCharArray())
-            {
-                securePassword.AppendChar(item);
-            }
-
-            using (var authenticationManager = new AuthenticationManager())
-            using (var context = authenticationManager.GetContext(path, userName, securePassword))
-            {
-                context.Load(context.Web, p => p.Title);
-                await context.ExecuteQueryAsync();
-                Console.WriteLine($"Title: {context.Web.Title}");
-            }
-            //  ctx.Credentials = new NetworkCredential("alpaslan.akdag@ch.abb.com","Kalkmak04;");
-
-            // var credentials = new SharePointOnlineCredentials(userName,securePassword);
-
-
-            //FileCollection file = ctx.Web.GetFolderByServerRelativeUrl(path).Files;
-            //ctx.Credentials = new SharePointOnlineCredentials(userName, password);
-
-            Web web = ctx.Web;
-            //ctx.Load(file);
-            ctx.ExecuteQuery();
-
-            //foreach (var item in file)
-            //{
-            //    Console.WriteLine(item.Title);
-            //}
-        }
-
-        public  async Task ReadFromSharePoint()
-        {
-            Uri site = new Uri("https://abb.sharepoint.com");
-            string user = "alpaslan.akdag@ch.abb.com";
-            string pas = "Kalkmak04;";
-            SecureString password = new SecureString();
-            foreach (var item in pas.ToCharArray())
-            {
-                password.AppendChar(item);
-            }
-
-            // Note: The PnP Sites Core AuthenticationManager class also supports this
-            using (var authenticationManager = new AuthenticationManager())
-            using (var context = authenticationManager.GetContext(site, user, password))
-            {
-                context.Load(context.Web, p => p.Title);
-                await context.ExecuteQueryAsync();
-                Console.WriteLine($"Title: {context.Web.Title}");
-            }
-        }
+        
 
         public ClientContext GetContext(Uri web, string userPrincipalName, SecureString userPassword)
         {
